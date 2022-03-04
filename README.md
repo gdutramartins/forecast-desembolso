@@ -62,3 +62,42 @@ A métrica utilizada para comparar a performance dos modelos foi R2.
 
 Arquivo *auto-regressive-pred.ipynb*
 
+
+
+* Separação do dataset em treino/teste, sendo que para o treino não é necessário separar features e labels.
+* Teste com os seguintes modelos autoregressivos:
+  * ARIMA - 0.27 com ordem (0, 2, 11) (p, i, q)
+  * SARIMA - 0.11 com ordem (0, 0, 1) (p, i, q) e ordem de sazonalidade (1, 0, 1)  (P, D, Q)
+  * SARIMAX - tivemos problemas na execução e optamos por passar para os modelos de suavização e redes neurais.
+
+
+
+## Parte IV - Previsão com Suavização Exponencial e Média Móvel
+
+Arquivo *smooth_pred.ipynb*
+
+
+
+* Separação do dataset em treino/teste, utilizando janelas de tamanho fixo. Diferente dos modelos autoregressivos que utilizam todo o passado das séries, nos modelos de suavização nós utilizamos janelas.
+* Tentamos realizar as previsões tornando a série estacionária através da Diferença.
+* R2 foi a métrica utilizada para comparação dos modelos, embora tenhamos medido também MSE e MAE.
+* **Resultados**
+  * Média Móvel  
+    * Melhor janela 12 meses com R2 = 0.07216053724695337
+    * Série da diferença com resultados piores.
+  * Exponencial Único
+    * Melhor janela 3 meses com R2 = 0.10391605340945498
+    * Série da diferença com resultados piores.
+  * Exponencial Duplo
+    * Melhor janela 21 meses com R2=-0.09850542321069233
+    * Série da diferença com resultados piores.
+  * Exponencial Tripo
+    * Melhor janela 38 meses com R2= 0.44334037347245714
+    * Não foi possível aplicar a diferença porque os valores precisam ser positivos.
+
+
+
+A previsão com Suavização por exponencial triplo superou todos os outros modelos.
+
+
+
