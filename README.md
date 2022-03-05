@@ -101,3 +101,46 @@ A previsão com Suavização por exponencial triplo superou todos os outros mode
 
 
 
+## Parte V - Previsão com Redes Neurais Recorrentes (Univariadas)
+
+Arquivo *rnn-pred.ipynb*
+
+* Univariate, somente a feature de desembolso foi utilizada.
+* Testamos somente com LSTM.
+  * Poucos dados, o treino foi rápido.
+  * GRU geralmente tem resultados piores e os resultados da LSTM não foram bons.
+* Separação do dataset em treino/validação/teste, utilizando janelas de tamanho fixo.
+* Dados normalizados para treino, validação e teste.
+* MSE foi a métrica utilizada para treinamento, mas R2 foi a métrica para comparação dos modelos.
+* Treinamento com armazenamento do modelo com melhor performance nos dados de validação (save_best_only)
+
+
+
+**Tabela comparativa que descreve a estrutura da rede e seus resultados** (arquivo *Comparativo-Performance-Modelos.xlsx*)
+
+| Janela | % Teste | % Val | Epochs | Batch | Camada 1             | Camada 2             | Camada 3        | Camada 4        | Camada 5 | Camada 6 | Otimizador | Metrica Loss | R2      | MAE      | MSE         | Comentários                                    |
+| ------ | ------- | ----- | ------ | ----- | -------------------- | -------------------- | --------------- | --------------- | -------- | -------- | ---------- | ------------ | ------- | -------- | ----------- | ---------------------------------------------- |
+| 24     | 15      | 15    | 33     | 100   | LSTM(200)            | LSTM(200)            | -               | -               | -        | -        | Adam       | mse          | -0,1926 | 86,4408  | 13.646,7935 |                                                |
+| 24     | 15      | 15    | 33     | 100   | LSTM(200)            | LSTM(200)            | -               | -               | -        | -        | SGD        | mse          | -2,3200 | 167,9298 | 37.991,4095 | Sempre uma linha reta com SGD                  |
+| 24     | 15      | 15    | 88     | 20    | LSTM(250)            | LSTM(250)            | -               | -               | -        | -        | Adam       | mse          | -0,0621 | 88,1555  | 12.153,6093 |                                                |
+| 24     | 15      | 15    | 83     | 20    | LSTM(200)            | LSTM(200)            | -               | -               | -        | -        | RMSProp    | mse          | -0,3373 | 100,7166 | 15.303,2783 |                                                |
+| 24     | 15      | 15    | ?      | 20    | LSTM(350)            | LSTM(350)            | -               | -               | -        | -        | Adam       | mse          | -0,0518 | 88,4540  | 12.035,6523 |                                                |
+| 16     | 15      | 15    | 114    | 20    | LSTM(350)            | LSTM(350)            | -               | -               | -        | -        | Adam       | mse          | -0,1007 | 90,4589  | 12.595,6271 |                                                |
+| 24     | 15      | 15    | 115    | 20    | LSTM(350)            | LSTM(350)            | Dense(20, tanh) | -               | -        | -        | Adam       | mse          | -0,0206 | 87,6079  | 11.679,2760 |                                                |
+| 24     | 15      | 15    | 115    | 20    | LSTM(350)            | LSTM(350)            | LSTM(350)       | Dense(50, tanh) | -        | -        | Adam       | mse          | -0,1200 |          |             |                                                |
+| 24     | 15      | 15    | 115    | 20    | LSTM(350, rd=0.1)    | LSTM(350, rd=0.1)    | Dense(50, tanh) | -               | -        | -        | Adam       | mse          | -0,0675 | 88,2367  | 12.215,9194 | com recurrente dropout maior o resultado piora |
+| 24     | 15      | 15    | 13     | 20    | LSTM(350)            | LSTM(350)            | GlobalAvPool1D  | Dense(20, tanh) | -        | -        | Adam       | mse          | -0,9857 | 118,2088 | 22.722,7331 |                                                |
+| 24     | 15      | 15    | 83     | 20    | LSTM(350)            | Spatial Dropout(0.1) | LSTM(350)       | Dense(20, tanh) | -        | -        | Adam       | mse          | -0,1191 | 88,3325  | 12.806,3364 |                                                |
+| 24     | 15      | 15    | 68     | 100   | Bi-LSTM(100)         | Bi-LSTM(50)          | -               | -               | -        | -        | Adam       | mse          | -0,0581 | 84,6726  | 12.301,6721 |                                                |
+| 24     | 15      | 15    | 57     | 20    | Bi-LSTM(350)         | Bi-LSTM(350)         | Dense(20, tanh) | -               | -        | -        | Adam       | mse          | -0,1565 | 89,6787  | 13.233,5188 |                                                |
+| 24     | 15      | 15    | 50     | 20    | Bi-LSTM(200)         | Bi-LSTM(100)         | -               | -               | -        | -        | Adam       | mse          | -0,1148 |          |             |                                                |
+| 24     | 15      | 15    | 54     | 20    | Bi-LSTM(100, rd=0.1) | Bi-LSTM(50, rd=0.1)  | -               | -               | -        | -        | Adam       | mse          | -0,0755 | 82,7388  | 12.307,0377 |                                                |
+
+
+
+## Parte V - Previsão com Redes Neurais Recorrentes (Multivariadas)
+
+Arquivo *rnn-multivariate-pred.ipynb*
+
+* Multivariate, analisamos as features com maior correlação com desembolso.
+* 
