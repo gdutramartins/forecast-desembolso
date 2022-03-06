@@ -109,6 +109,7 @@ Arquivo *rnn-pred.ipynb*
 * Testamos somente com LSTM.
   * Poucos dados, o treino foi rápido.
   * GRU geralmente tem resultados piores e os resultados da LSTM não foram bons.
+  * Os testes também foram realizados com redes bidirecionais.
 * Separação do dataset em treino/validação/teste, utilizando janelas de tamanho fixo.
 * Dados normalizados para treino, validação e teste.
 * MSE foi a métrica utilizada para treinamento, mas R2 foi a métrica para comparação dos modelos.
@@ -142,5 +143,7 @@ Arquivo *rnn-pred.ipynb*
 
 Arquivo *rnn-multivariate-pred.ipynb*
 
-* Multivariate, analisamos as features com maior correlação com desembolso.
-* 
+* Multivariate, selecionamos as features com maior correlação com desembolso.
+* A normalização dos dados de entrada (features e labels) e saída (previsão) precisaram ser tratados de forma diferenciada.
+* Resultados muito piores que os conseguidos na parte IV.
+* Testamos com inúmeras variações de configuração, mas quase sempre o gráfico plotado era uma linha reta.
